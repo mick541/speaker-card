@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карточка спикера — Юзленко М.С.</title>
+  <style>
+    :root {
+      --bg: #141b26;
+      --bg-card: #1c2535;
+      --bg-card-hover: #222d42;
+      --border: #2a3548;
+      --text: #c8d4e8;
+      --text-muted: #8494ad;
+      --neon: #00d4ff;
+      --neon-soft: rgba(0, 212, 255, 0.15);
+      --neon-glow: 0 0 12px rgba(0, 212, 255, 0.35), 0 0 24px rgba(0, 212, 255, 0.12);
+      --accent: #7c9cff;
+      --accent-soft: rgba(124, 156, 255, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      font-size: 13.5px;
+      padding: 20px;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 18px;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      box-shadow: var(--neon-glow);
+    }
+
+    .photo {
+      width: 110px;
+      height: 110px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid var(--neon);
+      box-shadow: 0 0 16px rgba(0, 212, 255, 0.3);
+      background: #2a3548;
+    }
+
+    .photo-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      color: var(--neon);
+    }
+
+    .header-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--neon);
+      margin-bottom: 4px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .header-sub {
+      color: var(--text-muted);
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    /* ── Stats bar ── */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      text-align: center;
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .stat-num {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--neon);
+      text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+    }
+
+    .stat-label {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Grid ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 680px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .header { grid-template-columns: 1fr; text-align: center; }
+      .photo { margin: 0 auto; }
+    }
+
+    /* ── Section card ── */
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .section.compact { padding: 12px 14px; }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--neon);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title .icon {
+      font-size: 16px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .section p {
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    /* ── Value blocks ── */
+    .value-block {
+      background: var(--neon-soft);
+      border-left: 3px solid var(--neon);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+
+    .value-block:last-child { margin-bottom: 0; }
+
+    .value-block strong {
+      display: block;
+      color: #fff;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .value-block span {
+      color: var(--text-muted);
+      font-size: 12.5px;
+    }
+
+    /* ── Tags ── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      border: 1px solid rgba(124, 156, 255, 0.3);
+      color: var(--accent);
+      font-size: 11.5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .tag:hover {
+      box-shadow: 0 0 8px rgba(124, 156, 255, 0.3);
+    }
+
+    /* ── Lists ── */
+    .list-compact {
+      list-style: none;
+      display: grid;
+      gap: 4px;
+    }
+
+    .list-compact li {
+      position: relative;
+      padding-left: 16px;
+      color: var(--text);
+      font-size: 12.5px;
+    }
+
+    .list-compact li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--neon);
+      font-size: 11px;
+    }
+
+    .list-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 16px;
+    }
+
+    @media (max-width: 580px) {
+      .list-2col { grid-template-columns: 1fr; }
+    }
+
+    /* ── Method highlight ── */
+    .method {
+      background: linear-gradient(135deg, var(--neon-soft), var(--accent-soft));
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .method-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .method-name em {
+      color: var(--neon);
+      font-style: normal;
+    }
+
+    .method p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .method-areas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .method-area {
+      font-size: 10.5px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+
+    /* ── Formats ── */
+    .formats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .format {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11.5px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .format .fi { color: var(--neon); }
+
+    /* ── Geo ── */
+    .geo {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .geo strong { color: var(--text); }
+
+    /* ── Contacts ── */
+    .contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .contact {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 12.5px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .contact:hover {
+      border-color: var(--neon);
+      box-shadow: var(--neon-glow);
+    }
+
+    .contact .ci {
+      font-size: 18px;
+      color: var(--neon);
+    }
+
+    /* ── Note ── */
+    .note {
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 12px;
+    }
+
+    .note-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .note .tags .tag {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-muted);
+    }
+
+    @media print {
+      body { background: #fff; color: #222; padding: 0; }
+      .section, .header, .stat, .method, .contact, .note {
+        background: #f5f5f5; border-color: #ccc; box-shadow: none;
+      }
+      .section-title, .stat-num, .header-label { color: #0066aa; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <img class="photo" src="image/my-poto.png" alt="Юзленко Михаил Сергеевич">
+    <!-- Замените на: <img class="photo" src="photo.jpg" alt="Юзленко М.С."> -->
+    <div>
+      <div class="header-label">◈ Карточка спикера</div>
+      <h1>Юзленко Михаил Сергеевич</h1>
+      <p class="header-sub">Психолог-практик · психотерапевт · канд. пед. наук · доцент · спикер<br>Аудитории до <strong style="color:var(--neon)">2000</strong> человек</p>
+    </div>
+  </header>
+
+  <!-- KEY STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-num">40+</div><div class="stat-label">лет практики</div></div>
+    <div class="stat"><div class="stat-num">20+</div><div class="stat-label">лет на сцене</div></div>
+    <div class="stat"><div class="stat-num">2000</div><div class="stat-label">макс. аудитория</div></div>
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">городов</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">научных статей</div></div>
+  </div>
+
+  <!-- POSITIONING + VALUE -->
+  <div class="grid-2">
+    <section class="section compact">
+      <div class="section-title"><span class="icon">◎</span> Краткое позиционирование</div>
+      <p>Практикующий психолог и психотерапевт, переводящий знания в прикладные инструменты для ресурса, устойчивости и продуктивности человека и команды.</p>
+      <p style="margin-top:6px;color:var(--text-muted);font-size:12px;">Опыт: спорт высших достижений · наука · психотерапия · публичные выступления. Темы: стресс, выгорание, мотивация, лидерство, адаптация к изменениям.</p>
+    </section>
+
+    <section class="section compact">
+      <div class="value-block">
+        <strong>💼 Чем полезен бизнесу</strong>
+        <span>Повышение эффективности без лишних энергозатрат, снижение выгорания, усиление мотивации, устойчивость к стрессу. Техники — сразу после встречи.</span>
+      </div>
+      <div class="value-block">
+        <strong>🎯 Ценность для аудитории</strong>
+        <span>Мотивация, трансформационные приёмы, саморегуляция, продуктивное мышление. Участники включают ресурсы и работают собраннее и результативнее.</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- TOPICS -->
+  <section class="section compact">
+    <div class="section-title"><span class="icon">📋</span> Темы выступлений</div>
+    <div class="tags">
+      <span class="tag">Управление стрессом</span>
+      <span class="tag">Профилактика выгорания</span>
+      <span class="tag">Психологическая безопасность</span>
+      <span class="tag">Лидерство и EQ</span>
+      <span class="tag">Сложные разговоры</span>
+      <span class="tag">Мотивация сотрудников</span>
+      <span class="tag">Устойчивость к изменениям</span>
+      <span class="tag">Ресурс руководителя</span>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <div class="method">
+    <div class="method-name"><em>◆</em> Суггестивно-триггерная психотерапия</div>
+    <p>Авторский метод на суггестивных установках и автоматических триггерах для активации внутренних ресурсов в обычной жизни.</p>
+    <div class="method-areas">
+      <span class="method-area">спорт</span>
+      <span class="method-area">психотерапия</span>
+      <span class="method-area">образование</span>
+      <span class="method-area">бизнес</span>
+      <span class="method-area">саморазвитие</span>
+    </div>
+  </div>
+
+  <!-- DIFFERENTIATORS + CAREER -->
+  <div class="grid-2">
+    <section class="section compact">
+      <div class="section-title"><span class="icon">★</span> Что отличает спикера</div>
+      <ul class="list-compact">
+        <li>Психолог сборной СССР по классической борьбе</li>
+        <li>Канд. пед. наук, доцент</li>
+        <li>40+ лет в психологии и психотерапии</li>
+        <li>20+ лет публичных выступлений</li>
+        <li>Россия, Беларусь, Молдова, Латвия, Эстония, Польша, США</li>
+        <li>Аудитории 500–2000 человек</li>
+        <li>Публикации в СМИ и периодике</li>
+      </ul>
+    </section>
+
+    <section class="section compact">
+      <div class="section-title"><span class="icon">⬡</span> Профессиональный путь</div>
+      <ul class="list-compact">
+        <li>Преподаватель кафедры борьбы</li>
+        <li>Преподаватель психологии</li>
+        <li>Доцент кафедры психологии</li>
+        <li>Психолог сборной СССР по классической борьбе</li>
+        <li>Практический психолог</li>
+        <li>Немедикаментозный психотерапевт</li>
+        <li>Лектор респ. категории ВО «Знание»</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- SCIENCE + SPORT -->
+  <div class="grid-2">
+    <section class="section compact">
+      <div class="section-title"><span class="icon">🔬</span> Научная база</div>
+      <ul class="list-compact">
+        <li>Кандидат пед. наук · доцент</li>
+        <li>Дисс.: «Система комплексного управления предстартовыми эмоциональными состояниями высококвалифицированных борцов»</li>
+        <li>Защита: Минск, 1987 · спец. 13.00.04</li>
+        <li>6 научных статей (псих. состояния сборной СССР)</li>
+      </ul>
+    </section>
+
+    <section class="section compact">
+      <div class="section-title"><span class="icon">🏅</span> Спортивный опыт</div>
+      <ul class="list-compact">
+        <li>Психолог сборной СССР по классической борьбе</li>
+        <li>Стресс, нагрузки, предсоревновательная подготовка мирового уровня</li>
+        <li>Парадигма системной автономии в спорте высших достижений</li>
+        <li>Карелин, Мамиашвили, Фомин и др.</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- MEDIA + FORMATS -->
+  <div class="grid-2">
+    <section class="section compact">
+      <div class="section-title"><span class="icon">📰</span> Медийность и признание</div>
+      <ul class="list-compact">
+        <li>«Вечерний Минск», «Знамя Юности», «Вечерний Кишинев», «Молодежь Эстонии», «Строительная газета»</li>
+        <li>Книга Я. Дымова «И дружбой сильны богатыри» (1983)</li>
+        <li>Благодарности Госкомспорта СССР и РБ</li>
+        <li>Рекомендации: Карелин, Мамиашвили, Рожков, Горбунов, Сопов</li>
+      </ul>
+    </section>
+
+    <section class="section compact">
+      <div class="section-title"><span class="icon">🎤</span> Форматы выступлений</div>
+      <div class="formats">
+        <span class="format"><span class="fi">▸</span> Keynote</span>
+        <span class="format"><span class="fi">▸</span> Лекция</span>
+        <span class="format"><span class="fi">▸</span> Мастер-класс</span>
+        <span class="format"><span class="fi">▸</span> Тренинг</span>
+        <span class="format"><span class="fi">▸</span> Панельная дискуссия</span>
+        <span class="format"><span class="fi">▸</span> Интерактив + кейсы</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- GEO -->
+  <section class="section compact">
+    <div class="section-title"><span class="icon">🌍</span> География выступлений</div>
+    <p class="geo"><strong>Минск · Кишинев · Тирасполь · Тюмень · Новый Уренгой · Ленинград · Москва · Лодзь · Нью-Йорк</strong> — и более 50 городов и областей (Россия, Беларусь, Молдова, Латвия, Эстония, Польша, США).</p>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="section compact">
+    <div class="section-title"><span class="icon">✉</span> Контакты для приглашений</div>
+    <div class="contacts">
+      <a class="contact" href="tel:+79161581451"><span class="ci">📞</span> +7 (916) 158-14-51</a>
+      <a class="contact" href="mailto:boostcurrency@gmail.com"><span class="ci">✉</span> boostcurrency@gmail.com</a>
+      <a class="contact" href="https://vk.ru/thepsychotherapist/" target="_blank"><span class="ci">VK</span> vk.ru/thepsychotherapist</a>
+    </div>
+  </section>
+
+  <!-- NOTE -->
+  <div class="note">
+    <div class="note-title">ℹ Адаптация под формат мероприятия</div>
+    <div class="tags">
+      <span class="tag">крупный бизнес</span>
+      <span class="tag">HR и корп. университеты</span>
+      <span class="tag">форумы и конференции</span>
+      <span class="tag">VIP-мероприятия</span>
+      <span class="tag">массовые офлайн-события</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
